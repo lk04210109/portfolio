@@ -2,11 +2,26 @@
 
 import { useEffect, useState } from "react";
 
+function ArrowIcon({ direction = "up-right", className }: { direction?: "up-right" | "right" | "down" | "left"; className?: string }) {
+  const paths = {
+    "up-right": <><path d="M5 19 19 5" /><path d="M9 5h10v10" /></>,
+    right: <><path d="M4 12h16" /><path d="m14 6 6 6-6 6" /></>,
+    down: <><path d="M12 4v16" /><path d="m6 14 6 6 6-6" /></>,
+    left: <><path d="M20 12H4" /><path d="m10 6-6 6 6 6" /></>,
+  };
+
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true" focusable="false">
+      {paths[direction]}
+    </svg>
+  );
+}
+
 const projects = [
   { no: "01", title: "视频制作", tone: "acid", mark: "Video", textMark: true },
   { no: "02", title: "图片制作", tone: "ink", mark: "Poster &\nLong Pic", textMark: true },
   { no: "03", title: "公众号运营", tone: "paper", mark: "WeChat\nRetainer", textMark: true },
-  { no: "04", title: "小程序制作", tone: "grid", mark: "↗" },
+  { no: "04", title: "小程序制作", tone: "grid", mark: "Mini Program" },
   { no: "06", title: "小红书投放", tone: "signal", mark: "red note", textMark: true },
 ];
 
@@ -231,7 +246,7 @@ export default function Home() {
           <div className="intro-grid" aria-hidden="true"><i /><i /><i /><i /><i /></div>
           <div className="intro-copy"><span>PORTFOLIO</span><span>SELECTED WORK</span></div>
           <div className="intro-counter" aria-hidden="true"><span>00</span><span className="intro-line" /><span>100</span></div>
-          <button className="skip" onClick={() => setIntroVisible(false)}>跳过 <span aria-hidden="true">→</span></button>
+          <button className="skip" onClick={() => setIntroVisible(false)}>跳过 <ArrowIcon direction="right" /></button>
         </div>
       )}
 
@@ -241,10 +256,10 @@ export default function Home() {
             <span className="brand-name">KEIRA<br />PORTFOLIO</span>
           </a>
           <nav aria-label="主导航">
-            <a href="#top"><em>00</em>首页</a>
-            <a href="#work"><em>01</em>作品</a>
-            <a href="#about"><em>02</em>关于</a>
-            <a href="#contact"><em>03</em>联系</a>
+            <a href="#top"><em>00</em>首页<ArrowIcon className="nav-arrow" /></a>
+            <a href="#work"><em>01</em>作品<ArrowIcon className="nav-arrow" /></a>
+            <a href="#about"><em>02</em>关于<ArrowIcon className="nav-arrow" /></a>
+            <a href="#contact"><em>03</em>联系<ArrowIcon className="nav-arrow" /></a>
           </nav>
         </aside>
 
@@ -256,7 +271,7 @@ export default function Home() {
             </div>
             <div className="hero-bottom">
               <p className="hero-contact">TEL: <a href="tel:+8617770843092">17770843092</a><br />E-MAIL: <a href="mailto:lk04210109@163.com">lk04210109@163.com</a></p>
-              <a href="#work" className="round-link" aria-label="查看精选作品"><span>VIEW<br />WORK</span><b aria-hidden="true">↓</b></a>
+              <a href="#work" className="round-link" aria-label="查看精选作品"><span>VIEW<br />WORK</span><ArrowIcon direction="down" /></a>
             </div>
           </section>
 
@@ -282,7 +297,7 @@ export default function Home() {
                 >
                   <div className={`project-art ${project.tone}`}>
                     <span className="art-index">PROJECT / {project.no}</span>
-                    <strong className={project.textMark ? "text-mark" : undefined}>{project.mark}</strong>
+                    <strong className={project.textMark ? "text-mark" : undefined}>{project.no === "04" ? <ArrowIcon /> : project.mark}</strong>
                   </div>
                   <div className="project-info">
                     <div><span>{project.no}</span><h3>{project.title}</h3></div>
@@ -332,7 +347,7 @@ export default function Home() {
           </section>
 
           <footer id="contact">
-            <div><p>来这里找我吧</p><button className="contact-trigger" type="button" onClick={() => setContactOpen(true)}>LET’S TALK <span aria-hidden="true">↗</span></button></div>
+            <div><p>来这里找我吧</p><button className="contact-trigger" type="button" onClick={() => setContactOpen(true)}>LET’S TALK <ArrowIcon /></button></div>
             <div className="footer-meta"><span>SHANGHAI · CN</span></div>
           </footer>
         </main>
@@ -446,7 +461,7 @@ export default function Home() {
                     <span className="wechat-work-tab">{section.tab}</span>
                     <h3>{section.title}</h3>
                     <span className="wechat-work-hint">HOVER TO EXPAND</span>
-                    <span className="wechat-work-arrow" aria-hidden="true">↓</span>
+                    <span className="wechat-work-arrow" aria-hidden="true"><ArrowIcon direction="down" /></span>
                   </header>
                   <div className="wechat-work-detail">
                     <div className="wechat-work-detail-inner">
@@ -482,7 +497,7 @@ export default function Home() {
                               aria-label={`打开${item.alt}`}
                             >
                               <img src={item.src} alt={item.alt} />
-                              <span aria-hidden="true">↗</span>
+                              <span aria-hidden="true"><ArrowIcon /></span>
                             </a>
                           ))}
                         </div>
@@ -588,7 +603,7 @@ export default function Home() {
             onClick={() => setActiveWechatImage((current) => current === null ? 0 : (current - 1 + wechatPlanningImages.length) % wechatPlanningImages.length)}
             aria-label="查看上一张图片"
           >
-            ←
+            <ArrowIcon direction="left" />
           </button>
           <figure className="wechat-image-panel" role="dialog" aria-modal="true" aria-label={wechatPlanningImages[activeWechatImage].alt}>
             <img src={wechatPlanningImages[activeWechatImage].src} alt={wechatPlanningImages[activeWechatImage].alt} />
@@ -600,7 +615,7 @@ export default function Home() {
             onClick={() => setActiveWechatImage((current) => current === null ? 0 : (current + 1) % wechatPlanningImages.length)}
             aria-label="查看下一张图片"
           >
-            →
+            <ArrowIcon direction="right" />
           </button>
         </div>
       )}
